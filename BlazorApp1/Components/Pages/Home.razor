@@ -1,7 +1,46 @@
-﻿@page "/"
+@page "/"
+@rendermode InteractiveServer
+@inject IStateBox<List<TaskInfo>> sessionState
+@inject NavigationManager NavManager
 
-<PageTitle>Home</PageTitle>
+<h3>タスク一覧</h3>
 
-<h1>Hello, world!</h1>
+<div>
+    <button class="btn btn-secondary" @onclick="NavigateToTaskAddPage">タスク登録</button>
+</div>
 
-Welcome to your new app.
+<div>
+    <RadzenDataGrid TItem="TaskInfo" Data="list" LoadData="LoadTaskInfo">
+        <Columns>
+            <RadzenDataGridColumn Title="状態">
+                <Template>
+                    @context.State
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="期限">
+                <Template>
+                    @context.Term
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="題名">
+                <Template>
+                    @context.Title
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Title="内容">
+                <Template>
+                    @if (@context.Details.IndexOf("\n") < 0)
+                    {
+                        @context.Details
+                    }
+                    else
+                    {
+                        @context.Details.Substring(0, @context.Details.IndexOf("\n"))
+                    }
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+</div>
+
+

@@ -1,0 +1,48 @@
+@page "/taskadd"
+@rendermode InteractiveServer
+@inject IStateBox<List<TaskInfo>> sessionState
+@inject NavigationManager NavManager
+@inject IJSRuntime JSRuntime
+@using BlazorApp1.Model
+
+
+<h3>タスク登録</h3>
+
+<EditForm Model="@taskmodel">
+    <label>
+        <h3>題名</h3>
+        <InputText @bind-Value=taskmodel.Title></InputText>
+    </label>
+    <p></p>
+    <label>
+        <h3>期限</h3>
+        <InputDate @bind-Value=taskmodel.Term></InputDate>
+    </label>
+    <p></p>
+    <label>
+        <h3>状態</h3>
+        <InputRadioGroup Name="state" @bind-Value=taskmodel.State>
+            @foreach (var state in Enum.GetValues(typeof(StateType)))
+            {
+                <label>
+                    @state.ToString()
+                    <InputRadio Name="state" Value="@state"></InputRadio>
+                </label>
+                <br />
+            }
+        </InputRadioGroup>
+    </label>
+    <p></p>
+    <label>
+        <h3>内容</h3>
+        <InputTextArea @bind-Value=taskmodel.Details></InputTextArea>
+    </label>
+</EditForm>
+
+
+<div>
+    <button class="btn btn-secondary" @onclick="AddTask">登録</button>
+    <button class="btn btn-secondary" @onclick="Cancel">キャンセル</button>
+</div>
+
+

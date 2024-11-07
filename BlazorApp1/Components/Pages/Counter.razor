@@ -1,19 +1,43 @@
-﻿@page "/counter"
+@page "/counter"
 @rendermode InteractiveServer
 
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
+@* <p role="status">Current count: @currentCount</p> *@
+<p role="status" style=@color>Current count: @currentCount</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<RadzenButton class="btn btn-primary" Click="@IncrementCount">Click me_Add</RadzenButton>
+<RadzenButton class="btn btn-primary" Click="@DecrementCount">Click me_Sub</RadzenButton>
 
 @code {
     private int currentCount = 0;
+    private string color = "color:black;";
 
     private void IncrementCount()
     {
         currentCount++;
+        SetColor();
     }
+
+    private void DecrementCount()
+    {
+        currentCount--;
+        SetColor();
+    }
+
+    private void SetColor()
+    {
+        if ((currentCount >= 1) && (currentCount <= 5))
+        {
+            color = "color:red;";
+        }
+        else
+        {
+            color = "color:black;";
+        }
+    }
+
 }
